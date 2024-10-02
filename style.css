@@ -1,3 +1,10 @@
+@import url("https://fonts.googleapis.com/css2?family=Teko:wght@300..700&display=swap");
+
+:root {
+  --bg-color: #b4d6cd;
+  --pink: #ff8c9e;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -7,8 +14,34 @@
 body {
   display: flex;
   align-items: center;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: space-evenly;
   width: 100%;
   height: 100vh;
-  background-color: aqua;
+  background-color: var(--bg-color);
+  font-family: "Teko", sans-serif;
+  cursor: default;
+}
+
+h1 {
+  font-size: 80px;
+  color: white;
+  text-shadow: 0 0 5px var(--pink);
+}
+
+.start-btn {
+  padding: 0.8em 2.8em;
+  border: 1px solid var(--pink);
+  color: var(--pink);
+  background-color: #fff;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 1.8rem;
+  transition: 0.8s;
+  text-decoration: none;
+}
+
+.start-btn:hover {
+  background-color: var(--pink);
+  color: #fff;
 }

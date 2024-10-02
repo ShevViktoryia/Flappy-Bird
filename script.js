@@ -3,8 +3,17 @@ const body = document.querySelector("body");
 let start = false;
 const pig = document.querySelector(".pig");
 let pipes = document.querySelectorAll(".pipe");
+let score = 0;
 let gravity = 50;
 let degree = 0;
+let highScore = localStorage.getItem("highScore")
+  ? parseInt(localStorage.getItem("highScore"))
+  : 0;
+
+const high_score = document.createElement("div");
+high_score.className = "high-score";
+high_score.innerText = `High Score: ${highScore}`;
+body.appendChild(high_score);
 
 function startGame() {
   gravity < 82 ? (gravity += 3) : gravity;
@@ -44,8 +53,15 @@ function movePipe() {
     if (pipeRight > body.clientWidth) {
       pipes[0].remove();
       pipes[0].remove();
+      score++;
+      updateScore();
+      return;
     }
   });
+}
+
+function updateScore() {
+  document.querySelector(".score span").textContent = score;
 }
 
 function checkCollision() {
@@ -59,6 +75,7 @@ function checkCollision() {
       pigRect.top < pipeRect.bottom
     ) {
       alert("Game Over!");
+      return;
     }
   });
 }
@@ -76,6 +93,7 @@ document.addEventListener("keypress", (e) => {
     }, 20);
     setInterval(() => {
       createPipe();
+      updateScore();
     }, 3000);
   }
 });

@@ -6,3 +6,17 @@
   left: 30%;
   transform: translate(-30%, -50%);
 }
+
+.message {
+  font-size: 60px;
+  color: white;
+  text-shadow: 0 0 5px var(--pink);
+  position: absolute;
+  top: 10%;
+}
+
+.pipe {
+  position: absolute;
+  right: 0;
+  height: 100vh;
+}

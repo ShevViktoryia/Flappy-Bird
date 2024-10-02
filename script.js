@@ -1,19 +1,13 @@
 const body = document.querySelector("body");
 
-const pipe = document.createElement("img");
-pipe.className = "pipe";
-pipe.setAttribute("src", "./assets/images/pipe.png");
-pipe.setAttribute("alt", "pipe");
-
-body.appendChild(pipe);
-
 let start = false;
 const pig = document.querySelector(".pig");
+let pipes = document.querySelectorAll(".pipe");
 let gravity = 50;
 let degree = 0;
 
 function startGame() {
-  gravity < 80 ? (gravity += 3) : gravity;
+  gravity < 82 ? (gravity += 3) : gravity;
   pig.style.top = `${gravity}%`;
   degree <= 30 ? (degree += 5) : degree;
   pig.style.transform = `rotate(${degree}deg)`;
@@ -22,8 +16,51 @@ function startGame() {
 function PigFly() {
   gravity > 0 ? (gravity -= 8) : gravity;
   pig.style.top = `${gravity}%`;
-  degree >= -30 ? (degree -= 10) : degree;
+  degree >= -30 ? (degree -= 13) : degree;
   pig.style.transform = `rotate(${degree}deg)`;
+}
+
+function createPipe() {
+  const t_pipe = document.createElement("div");
+  t_pipe.className = "pipe top-pipe";
+  const random = Math.floor(Math.random() * 40) + 10;
+  t_pipe.style.height = `${random}%`;
+
+  const b_pipe = document.createElement("div");
+  b_pipe.className = "pipe btm-pipe";
+  b_pipe.style.height = `${60 - random}%`;
+
+  body.appendChild(t_pipe);
+  body.appendChild(b_pipe);
+  pipes = document.querySelectorAll(".pipe");
+}
+
+function movePipe() {
+  pipes.forEach((pipe) => {
+    let pipeRight = parseInt(
+      window.getComputedStyle(pipe).getPropertyValue("right")
+    );
+    pipe.style.right = pipeRight + 4 + "px";
+    if (pipeRight > body.clientWidth) {
+      pipes[0].remove();
+      pipes[0].remove();
+    }
+  });
+}
+
+function checkCollision() {
+  pipes.forEach((pipe) => {
+    const pipeRect = pipe.getBoundingClientRect();
+    const pigRect = pig.getBoundingClientRect();
+    if (
+      pigRect.left < pipeRect.right &&
+      pigRect.right > pipeRect.left &&
+      pigRect.bottom > pipeRect.top &&
+      pigRect.top < pipeRect.bottom
+    ) {
+      alert("Game Over!");
+    }
+  });
 }
 
 document.addEventListener("keypress", (e) => {
@@ -33,6 +70,13 @@ document.addEventListener("keypress", (e) => {
     setInterval(() => {
       startGame();
     }, 150);
+    setInterval(() => {
+      movePipe();
+      checkCollision();
+    }, 20);
+    setInterval(() => {
+      createPipe();
+    }, 3000);
   }
 });
 

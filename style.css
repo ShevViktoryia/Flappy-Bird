@@ -3,6 +3,7 @@
 :root {
   --bg-color: #b4d6cd;
   --pink: #ff8c9e;
+  --yellow: #ffda76;
 }
 
 * {
@@ -21,6 +22,7 @@ body {
   background-color: var(--bg-color);
   font-family: "Teko", sans-serif;
   cursor: default;
+  overflow: hidden;
 }
 
 h1 {

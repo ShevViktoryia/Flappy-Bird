@@ -18,6 +18,17 @@
 
 .pipe {
   position: absolute;
+  width: 85px;
   right: 0;
-  height: 100vh;
+  background-color: var(--yellow);
+}
+
+.top-pipe {
+  height: 40%;
+  top: 0;
+}
+
+.btm-pipe {
+  height: 20%;
+  bottom: 0;
 }

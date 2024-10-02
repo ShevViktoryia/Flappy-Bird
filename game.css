@@ -4,7 +4,8 @@
   position: absolute;
   top: 50%;
   left: 30%;
-  transform: translate(-30%, -50%);
+  transform: translate(-30%, -50%) rotate(0deg);
+  transition: 0.3s;
 }
 
 .message {

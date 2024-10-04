@@ -3,6 +3,7 @@ const body = document.querySelector("body");
 let start = false;
 const pig = document.querySelector(".pig");
 let pipes = document.querySelectorAll(".pipe");
+let pipes_conteiner = document.querySelector(".pipes");
 let score = 0;
 let gravity = 50;
 let degree = 0;
@@ -39,8 +40,8 @@ function createPipe() {
   b_pipe.className = "pipe btm-pipe";
   b_pipe.style.height = `${60 - random}%`;
 
-  body.appendChild(t_pipe);
-  body.appendChild(b_pipe);
+  pipes_conteiner.appendChild(t_pipe);
+  pipes_conteiner.appendChild(b_pipe);
   pipes = document.querySelectorAll(".pipe");
 }
 
@@ -49,36 +50,49 @@ function movePipe() {
     let pipeRight = parseInt(
       window.getComputedStyle(pipe).getPropertyValue("right")
     );
-    pipe.style.right = pipeRight + 4 + "px";
-    if (pipeRight > body.clientWidth) {
-      pipes[0].remove();
-      pipes[0].remove();
-      score++;
-      updateScore();
-      return;
-    }
+    pipe.style.right = pipeRight + 6 + "px";
   });
+  const pipeInterval = setInterval(() => {
+    pipes.forEach((pipe) => {
+      let pipeLeft = parseInt(
+        window.getComputedStyle(pipe).getPropertyValue("left")
+      );
+      if (pipeLeft < 0) {
+        clearInterval(pipeInterval);
+        for (let i = 0; i < 2; i++) {
+          if (pipes_conteiner.firstElementChild) {
+            pipes_conteiner.removeChild(pipes_conteiner.firstElementChild);
+          }
+        }
+        score++;
+        updateScore();
+      }
+      // if (checkCollision()) {
+      //   clearInterval(pipeInterval);
+      // }
+    });
+  }, 10);
 }
 
 function updateScore() {
   document.querySelector(".score span").textContent = score;
 }
 
-function checkCollision() {
-  pipes.forEach((pipe) => {
-    const pipeRect = pipe.getBoundingClientRect();
-    const pigRect = pig.getBoundingClientRect();
-    if (
-      pigRect.left < pipeRect.right &&
-      pigRect.right > pipeRect.left &&
-      pigRect.bottom > pipeRect.top &&
-      pigRect.top < pipeRect.bottom
-    ) {
-      alert("Game Over!");
-      return;
-    }
-  });
-}
+// function checkCollision() {
+//   pipes.forEach((pipe) => {
+//     const pipeRect = pipe.getBoundingClientRect();
+//     const pigRect = pig.getBoundingClientRect();
+//     if (
+//       pigRect.left < pipeRect.right &&
+//       pigRect.right > pipeRect.left &&
+//       pigRect.bottom > pipeRect.top &&
+//       pigRect.top < pipeRect.bottom
+//     ) {
+//       alert("Game Over!");
+//       return;
+//     }
+//   });
+// }
 
 document.addEventListener("keypress", (e) => {
   if (e.key === "Enter") {
@@ -89,7 +103,6 @@ document.addEventListener("keypress", (e) => {
     }, 150);
     setInterval(() => {
       movePipe();
-      checkCollision();
     }, 20);
     setInterval(() => {
       createPipe();

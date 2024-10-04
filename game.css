@@ -39,6 +39,7 @@
   left: 10px;
   color: white;
   font-size: 50px;
+  z-index: 3;
 }
 
 .high-score {

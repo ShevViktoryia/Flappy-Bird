@@ -49,3 +49,29 @@ button:hover,
   background-color: var(--pink);
   color: #fff;
 }
+
+footer {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+}
+
+footer a img,
+footer a svg {
+  transition: 0.5s;
+}
+footer a:hover img,
+footer a:hover svg {
+  box-shadow: 0 0 10px white;
+}
+
+footer a:hover svg {
+  border-radius: 50%;
+}
+
+.rs img {
+  width: 30%;
+  padding: 10px;
+}

@@ -22,7 +22,7 @@ high_score.innerText = `High Score: ${highScore}`;
 game.appendChild(high_score);
 
 function startGame() {
-  gravity < 82 ? (gravity += 4) : gravity;
+  gravity < 82 ? (gravity += 5) : gravity;
   pig.style.top = `${gravity}%`;
   degree <= 30 ? (degree += 5) : degree;
   pig.style.transform = `rotate(${degree}deg)`;
@@ -56,6 +56,10 @@ function createPipe() {
         window.getComputedStyle(pipe).getPropertyValue("left")
       );
       if (pipeLeft < -60) {
+        const audio = new Audio();
+        audio.src = "./assets/sounds/collect.mp3";
+        audio.volume = 0.1;
+        audio.play();
         clearInterval(pipeInterval);
         for (let i = 0; i < 2; i++) {
           if (pipes_conteiner.firstElementChild) {
@@ -83,6 +87,10 @@ function checkCollision() {
       pigRect.bottom > pipeRect.top &&
       pigRect.top < pipeRect.bottom
     ) {
+      const audio = new Audio();
+      audio.src = "./assets/sounds/hit.mp3";
+      audio.volume = 0.3;
+      audio.play();
       game.style.display = "none";
       game_over.style.display = "flex";
       final_score.textContent = score;

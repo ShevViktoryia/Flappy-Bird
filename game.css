@@ -46,7 +46,7 @@
   width: 85px;
   right: 0;
   background-color: var(--yellow);
-  animation: pipesMove 2.5s linear infinite;
+  animation: pipesMove 3s linear infinite;
 }
 
 .top-pipe {

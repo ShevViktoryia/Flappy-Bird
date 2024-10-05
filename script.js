@@ -1,4 +1,7 @@
-const body = document.querySelector("body");
+const game = document.querySelector(".game");
+const message = document.querySelector(".message");
+const game_over = document.querySelector(".game-over");
+const final_score = document.querySelector(".final-score span");
 
 let start = false;
 const pig = document.querySelector(".pig");
@@ -16,7 +19,7 @@ let highScore = localStorage.getItem("highScore")
 const high_score = document.createElement("div");
 high_score.className = "high-score";
 high_score.innerText = `High Score: ${highScore}`;
-body.appendChild(high_score);
+game.appendChild(high_score);
 
 function startGame() {
   gravity < 82 ? (gravity += 4) : gravity;
@@ -47,6 +50,7 @@ function createPipe() {
   pipes = document.querySelectorAll(".pipe");
 
   let pipeInterval = setInterval(() => {
+    checkCollision();
     pipes.forEach((pipe) => {
       let pipeLeft = parseInt(
         window.getComputedStyle(pipe).getPropertyValue("left")
@@ -58,7 +62,6 @@ function createPipe() {
             pipes_conteiner.removeChild(pipes_conteiner.firstElementChild);
           }
         }
-
         score++;
         updateScore();
       }
@@ -70,35 +73,32 @@ function updateScore() {
   document.querySelector(".score span").textContent = score;
 }
 
-function handleGameOver() {
-  alert("Game Over! Your score: " + score);
-
-  // Update high score if current score is greater
-  if (score > highScore) {
-    highScore = score;
-    localStorage.setItem("highScore", highScore);
-    high_score.innerText = `High Score: ${highScore}`;
-  }
+function checkCollision() {
+  pipes.forEach((pipe) => {
+    const pipeRect = pipe.getBoundingClientRect();
+    const pigRect = pig.getBoundingClientRect();
+    if (
+      pigRect.left < pipeRect.right &&
+      pigRect.right > pipeRect.left &&
+      pigRect.bottom > pipeRect.top &&
+      pigRect.top < pipeRect.bottom
+    ) {
+      game.style.display = "none";
+      game_over.style.display = "flex";
+      final_score.textContent = score;
+      if (score > highScore) {
+        highScore = score;
+        localStorage.setItem("highScore", highScore);
+        high_score.innerText = `High Score: ${highScore}`;
+      }
+      score = 0;
+    }
+  });
 }
-
-// function checkCollision() {
-//   pipes.forEach((pipe) => {
-//     const pipeRect = pipe.getBoundingClientRect();
-//     const pigRect = pig.getBoundingClientRect();
-//     if (
-//       pigRect.left < pipeRect.right &&
-//       pigRect.right > pipeRect.left &&
-//       pigRect.bottom > pipeRect.top &&
-//       pigRect.top < pipeRect.bottom
-//     ) {
-//       alert("Game Over!");
-//       return;
-//     }
-//   });
-// }
 
 document.addEventListener("keypress", (e) => {
   if (e.key === " ") {
+    message.style.display = "none";
     PigFly();
   }
 });

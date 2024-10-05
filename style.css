@@ -31,6 +31,7 @@ h1 {
   text-shadow: 0 0 5px var(--pink);
 }
 
+button,
 .start-btn {
   padding: 0.8em 2.8em;
   border: 1px solid var(--pink);
@@ -43,6 +44,7 @@ h1 {
   text-decoration: none;
 }
 
+button:hover,
 .start-btn:hover {
   background-color: var(--pink);
   color: #fff;

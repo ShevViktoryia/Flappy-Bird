@@ -25,12 +25,19 @@
     <link rel="manifest" href="./assets/icons/site.webmanifest" />
   </head>
   <body>
-    <h2 class="message">Press Space To Fly</h2>
-    <p class="score">Score: <span>0</span></p>
-    <img class="pig" src="./assets/images/pig.png" alt="pig" />
-    <div class="pipes">
-      <div class="pipe top-pipe"></div>
-      <div class="pipe btm-pipe"></div>
+    <div class="game">
+      <h2 class="message">Press Space To Fly</h2>
+      <p class="score">Score: <span>0</span></p>
+      <img class="pig" src="./assets/images/pig.png" alt="pig" />
+      <div class="pipes">
+        <div class="pipe top-pipe"></div>
+        <div class="pipe btm-pipe"></div>
+      </div>
+    </div>
+    <div class="game-over">
+      <h2 class="game-over_title">Game Over</h2>
+      <p class="final-score">Your final score is: <span></span></p>
+      <button class="refresh-btn" onclick="location.reload()">Restart</button>
     </div>
 
     <script src="script.js"></script>

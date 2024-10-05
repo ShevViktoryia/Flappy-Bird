@@ -7,6 +7,8 @@ let pipes_conteiner = document.querySelector(".pipes");
 let score = 0;
 let gravity = 50;
 let degree = 0;
+let gameInterval;
+let pipeInterval;
 let highScore = localStorage.getItem("highScore")
   ? parseInt(localStorage.getItem("highScore"))
   : 0;
@@ -17,7 +19,7 @@ high_score.innerText = `High Score: ${highScore}`;
 body.appendChild(high_score);
 
 function startGame() {
-  gravity < 82 ? (gravity += 3) : gravity;
+  gravity < 82 ? (gravity += 4) : gravity;
   pig.style.top = `${gravity}%`;
   degree <= 30 ? (degree += 5) : degree;
   pig.style.transform = `rotate(${degree}deg)`;
@@ -43,39 +45,40 @@ function createPipe() {
   pipes_conteiner.appendChild(t_pipe);
   pipes_conteiner.appendChild(b_pipe);
   pipes = document.querySelectorAll(".pipe");
-}
 
-function movePipe() {
-  pipes.forEach((pipe) => {
-    let pipeRight = parseInt(
-      window.getComputedStyle(pipe).getPropertyValue("right")
-    );
-    pipe.style.right = pipeRight + 6 + "px";
-  });
-  const pipeInterval = setInterval(() => {
+  let pipeInterval = setInterval(() => {
     pipes.forEach((pipe) => {
       let pipeLeft = parseInt(
         window.getComputedStyle(pipe).getPropertyValue("left")
       );
-      if (pipeLeft < 0) {
+      if (pipeLeft < -60) {
         clearInterval(pipeInterval);
         for (let i = 0; i < 2; i++) {
           if (pipes_conteiner.firstElementChild) {
             pipes_conteiner.removeChild(pipes_conteiner.firstElementChild);
           }
         }
+
         score++;
         updateScore();
       }
-      // if (checkCollision()) {
-      //   clearInterval(pipeInterval);
-      // }
     });
-  }, 10);
+  }, 20);
 }
 
 function updateScore() {
   document.querySelector(".score span").textContent = score;
+}
+
+function handleGameOver() {
+  alert("Game Over! Your score: " + score);
+
+  // Update high score if current score is greater
+  if (score > highScore) {
+    highScore = score;
+    localStorage.setItem("highScore", highScore);
+    high_score.innerText = `High Score: ${highScore}`;
+  }
 }
 
 // function checkCollision() {
@@ -95,24 +98,14 @@ function updateScore() {
 // }
 
 document.addEventListener("keypress", (e) => {
-  if (e.key === "Enter") {
-    document.querySelector("h2").style.display = "none";
-    start = true;
-    setInterval(() => {
-      startGame();
-    }, 150);
-    setInterval(() => {
-      movePipe();
-    }, 20);
-    setInterval(() => {
-      createPipe();
-      updateScore();
-    }, 3000);
-  }
-});
-
-document.addEventListener("keypress", (e) => {
-  if (e.key === " " && start === true) {
+  if (e.key === " ") {
     PigFly();
   }
 });
+
+gameInterval = setInterval(startGame, 150);
+setInterval(() => {
+  updateScore();
+}, 3000);
+
+pipeInterval = setInterval(createPipe, 1000);

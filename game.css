@@ -21,6 +21,8 @@
   width: 85px;
   right: 0;
   background-color: var(--yellow);
+  animation: pipesMove 2.5s linear infinite;
+  z-index: -1;
 }
 
 .top-pipe {
@@ -48,4 +50,13 @@
   left: 10px;
   color: white;
   font-size: 50px;
+}
+
+@keyframes pipesMove {
+  0% {
+    right: 0;
+  }
+  100% {
+    right: 100%;
+  }
 }

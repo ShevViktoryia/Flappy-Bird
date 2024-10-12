@@ -123,6 +123,7 @@ function checkCollision() {
         const tr = document.createElement("tr");
         const td_name = document.createElement("td");
         const td_score = document.createElement("td");
+        td_score.className = "td-score";
         td_name.innerHTML = ind + 1 + ". " + game.name;
         td_score.innerHTML = game.score;
         tr.append(td_name);

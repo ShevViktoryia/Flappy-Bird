@@ -26,8 +26,6 @@
   font-size: 80px;
   color: white;
   text-shadow: 0 0 5px var(--pink);
-  position: absolute;
-  top: 10%;
 }
 
 .final-score {
@@ -87,6 +85,24 @@
   font-family: "Teko", sans-serif;
   cursor: default;
   overflow: hidden;
+}
+
+.final-table {
+  border-collapse: collapse;
+  color: white;
+  padding: 10px;
+  font-size: 1.2rem;
+}
+
+.final-table caption {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  text-shadow: 0 0 5px var(--pink);
+}
+
+.final-table td {
+  border: 1px solid white;
+  padding: 1.3rem;
 }
 
 @keyframes pipesMove {
